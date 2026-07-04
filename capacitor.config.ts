@@ -3,7 +3,7 @@ import type { CapacitorConfig } from "@capacitor/cli";
 const config: CapacitorConfig = {
   appId: "com.basicfootballtacticsedu.app",
   appName: "Basic Football Tactics Edu",
-  webDir: "dist",
+  webDir: "dist/client",
   bundledWebRuntime: false,
   android: {
     allowMixedContent: false,
