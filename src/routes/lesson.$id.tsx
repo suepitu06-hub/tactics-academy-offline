@@ -109,7 +109,7 @@ function LessonPage() {
             <h3 className="text-sm font-bold uppercase tracking-wider">Tips</h3>
           </div>
           <ul className="space-y-2">
-            {lesson.tips.map((t, i) => (
+            {lesson.tips.map((t: string, i: number) => (
               <li key={i} className="flex gap-2 text-sm">
                 <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                 {t}
@@ -129,7 +129,7 @@ function LessonPage() {
             <h3 className="text-sm font-bold uppercase tracking-wider">Key points</h3>
           </div>
           <ul className="space-y-2">
-            {lesson.keyPoints.map((k, i) => (
+            {lesson.keyPoints.map((k: string, i: number) => (
               <li key={i} className="flex items-center gap-2 text-sm">
                 <CheckCircle2 size={16} className="shrink-0 text-success" />
                 {k}

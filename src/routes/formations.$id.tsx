@@ -42,7 +42,7 @@ function FormationDetail() {
   };
 
   // Compute shape variants
-  const players = formation.players.map((p) => {
+  const players = formation.players.map((p: any) => {
     let y = p.y;
     if (mode === "attack") y = Math.max(6, y - 12);
     if (mode === "defense") y = Math.min(95, y + 10);
@@ -103,7 +103,7 @@ function FormationDetail() {
               <CheckCircle2 size={16} /> Advantages
             </h3>
             <ul className="space-y-1.5 text-sm">
-              {formation.advantages.map((a, i) => (
+              {formation.advantages.map((a: string, i: number) => (
                 <li key={i} className="flex gap-2"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-success" />{a}</li>
               ))}
             </ul>
@@ -113,7 +113,7 @@ function FormationDetail() {
               <XCircle size={16} /> Disadvantages
             </h3>
             <ul className="space-y-1.5 text-sm">
-              {formation.disadvantages.map((a, i) => (
+              {formation.disadvantages.map((a: string, i: number) => (
                 <li key={i} className="flex gap-2"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />{a}</li>
               ))}
             </ul>
