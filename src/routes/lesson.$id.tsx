@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Bookmark, CheckCircle2, Clock, ArrowRight, Lightbulb, ListChecks, Sparkles } from "lucide-react";
 import { getLesson, LESSONS } from "@/data/lessons";
