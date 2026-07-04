@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Basic Football Tactics Edu</string>
+    <string name="title_activity_main">Basic Football Tactics Edu</string>
+    <string name="package_name">com.basicfootballtacticsedu.app</string>
+    <string name="custom_url_scheme">com.basicfootballtacticsedu.app</string>
+</resources>
