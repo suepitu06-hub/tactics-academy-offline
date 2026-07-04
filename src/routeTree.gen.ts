@@ -9,38 +9,232 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as FormationsRouteImport } from './routes/formations'
+import { Route as DictionaryRouteImport } from './routes/dictionary'
+import { Route as BookmarksRouteImport } from './routes/bookmarks'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as QuizCategoryRouteImport } from './routes/quiz.$category'
+import { Route as LessonIdRouteImport } from './routes/lesson.$id'
+import { Route as FormationsIdRouteImport } from './routes/formations.$id'
+import { Route as CategoryIdRouteImport } from './routes/category.$id'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormationsRoute = FormationsRouteImport.update({
+  id: '/formations',
+  path: '/formations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DictionaryRoute = DictionaryRouteImport.update({
+  id: '/dictionary',
+  path: '/dictionary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookmarksRoute = BookmarksRouteImport.update({
+  id: '/bookmarks',
+  path: '/bookmarks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuizCategoryRoute = QuizCategoryRouteImport.update({
+  id: '/$category',
+  path: '/$category',
+  getParentRoute: () => QuizRoute,
+} as any)
+const LessonIdRoute = LessonIdRouteImport.update({
+  id: '/lesson/$id',
+  path: '/lesson/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormationsIdRoute = FormationsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => FormationsRoute,
+} as any)
+const CategoryIdRoute = CategoryIdRouteImport.update({
+  id: '/category/$id',
+  path: '/category/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bookmarks': typeof BookmarksRoute
+  '/dictionary': typeof DictionaryRoute
+  '/formations': typeof FormationsRouteWithChildren
+  '/progress': typeof ProgressRoute
+  '/quiz': typeof QuizRouteWithChildren
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/category/$id': typeof CategoryIdRoute
+  '/formations/$id': typeof FormationsIdRoute
+  '/lesson/$id': typeof LessonIdRoute
+  '/quiz/$category': typeof QuizCategoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bookmarks': typeof BookmarksRoute
+  '/dictionary': typeof DictionaryRoute
+  '/formations': typeof FormationsRouteWithChildren
+  '/progress': typeof ProgressRoute
+  '/quiz': typeof QuizRouteWithChildren
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/category/$id': typeof CategoryIdRoute
+  '/formations/$id': typeof FormationsIdRoute
+  '/lesson/$id': typeof LessonIdRoute
+  '/quiz/$category': typeof QuizCategoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bookmarks': typeof BookmarksRoute
+  '/dictionary': typeof DictionaryRoute
+  '/formations': typeof FormationsRouteWithChildren
+  '/progress': typeof ProgressRoute
+  '/quiz': typeof QuizRouteWithChildren
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
+  '/category/$id': typeof CategoryIdRoute
+  '/formations/$id': typeof FormationsIdRoute
+  '/lesson/$id': typeof LessonIdRoute
+  '/quiz/$category': typeof QuizCategoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/bookmarks'
+    | '/dictionary'
+    | '/formations'
+    | '/progress'
+    | '/quiz'
+    | '/search'
+    | '/settings'
+    | '/category/$id'
+    | '/formations/$id'
+    | '/lesson/$id'
+    | '/quiz/$category'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/bookmarks'
+    | '/dictionary'
+    | '/formations'
+    | '/progress'
+    | '/quiz'
+    | '/search'
+    | '/settings'
+    | '/category/$id'
+    | '/formations/$id'
+    | '/lesson/$id'
+    | '/quiz/$category'
+  id:
+    | '__root__'
+    | '/'
+    | '/bookmarks'
+    | '/dictionary'
+    | '/formations'
+    | '/progress'
+    | '/quiz'
+    | '/search'
+    | '/settings'
+    | '/category/$id'
+    | '/formations/$id'
+    | '/lesson/$id'
+    | '/quiz/$category'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookmarksRoute: typeof BookmarksRoute
+  DictionaryRoute: typeof DictionaryRoute
+  FormationsRoute: typeof FormationsRouteWithChildren
+  ProgressRoute: typeof ProgressRoute
+  QuizRoute: typeof QuizRouteWithChildren
+  SearchRoute: typeof SearchRoute
+  SettingsRoute: typeof SettingsRoute
+  CategoryIdRoute: typeof CategoryIdRoute
+  LessonIdRoute: typeof LessonIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations': {
+      id: '/formations'
+      path: '/formations'
+      fullPath: '/formations'
+      preLoaderRoute: typeof FormationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dictionary': {
+      id: '/dictionary'
+      path: '/dictionary'
+      fullPath: '/dictionary'
+      preLoaderRoute: typeof DictionaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bookmarks': {
+      id: '/bookmarks'
+      path: '/bookmarks'
+      fullPath: '/bookmarks'
+      preLoaderRoute: typeof BookmarksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +242,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quiz/$category': {
+      id: '/quiz/$category'
+      path: '/$category'
+      fullPath: '/quiz/$category'
+      preLoaderRoute: typeof QuizCategoryRouteImport
+      parentRoute: typeof QuizRoute
+    }
+    '/lesson/$id': {
+      id: '/lesson/$id'
+      path: '/lesson/$id'
+      fullPath: '/lesson/$id'
+      preLoaderRoute: typeof LessonIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formations/$id': {
+      id: '/formations/$id'
+      path: '/$id'
+      fullPath: '/formations/$id'
+      preLoaderRoute: typeof FormationsIdRouteImport
+      parentRoute: typeof FormationsRoute
+    }
+    '/category/$id': {
+      id: '/category/$id'
+      path: '/category/$id'
+      fullPath: '/category/$id'
+      preLoaderRoute: typeof CategoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface FormationsRouteChildren {
+  FormationsIdRoute: typeof FormationsIdRoute
+}
+
+const FormationsRouteChildren: FormationsRouteChildren = {
+  FormationsIdRoute: FormationsIdRoute,
+}
+
+const FormationsRouteWithChildren = FormationsRoute._addFileChildren(
+  FormationsRouteChildren,
+)
+
+interface QuizRouteChildren {
+  QuizCategoryRoute: typeof QuizCategoryRoute
+}
+
+const QuizRouteChildren: QuizRouteChildren = {
+  QuizCategoryRoute: QuizCategoryRoute,
+}
+
+const QuizRouteWithChildren = QuizRoute._addFileChildren(QuizRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookmarksRoute: BookmarksRoute,
+  DictionaryRoute: DictionaryRoute,
+  FormationsRoute: FormationsRouteWithChildren,
+  ProgressRoute: ProgressRoute,
+  QuizRoute: QuizRouteWithChildren,
+  SearchRoute: SearchRoute,
+  SettingsRoute: SettingsRoute,
+  CategoryIdRoute: CategoryIdRoute,
+  LessonIdRoute: LessonIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
