@@ -14,7 +14,6 @@
     "cap:sync": "npm run build:spa && cap sync android",
     "cap:open": "cap open android",
     "android": "npm run build:spa && cap sync android && cap open android"
-
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",
@@ -81,7 +80,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
-    "@lovable.dev/vite-tanstack-config": "2.7.0",
+    "@lovable.dev/vite-tanstack-config": "2.7.1",
     "@types/node": "^22.16.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
