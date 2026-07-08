@@ -5,15 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build:web": "vite build",
+    "build": "vite build && node scripts/build-spa.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "build:spa": "vite build && node scripts/build-spa.mjs",
-    "cap:sync": "npm run build:spa && cap sync android",
+    "build:spa": "npm run build",
+    "cap:sync": "npm run build && cap sync android",
     "cap:open": "cap open android",
-    "android": "npm run build:spa && cap sync android && cap open android"
+    "android": "npm run build && cap sync android && cap open android"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",

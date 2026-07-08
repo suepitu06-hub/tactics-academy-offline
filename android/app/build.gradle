@@ -42,7 +42,10 @@ dependencies {
     implementation project(':capacitor-cordova-android-plugins')
 }
 
-apply from: 'capacitor.build.gradle'
+def capacitorBuild = file('capacitor.build.gradle')
+if (capacitorBuild.exists()) {
+    apply from: capacitorBuild
+}
 
 try {
     def servicesJSON = file('google-services.json')
