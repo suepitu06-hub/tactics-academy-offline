@@ -11,10 +11,11 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "build:spa": "npm run build",
-    "cap:sync": "npm run build && cap sync android",
+    "build:spa": "node scripts/build-spa.mjs",
+    "capacitor:sync:before": "npm run build",
+    "cap:sync": "cap sync android",
     "cap:open": "cap open android",
-    "android": "npm run build && cap sync android && cap open android"
+    "android": "cap sync android && cap open android"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",

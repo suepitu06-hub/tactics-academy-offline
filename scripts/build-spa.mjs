@@ -15,7 +15,7 @@
  * there is no SSR-rendered DOM to hydrate.
  */
 
-import { readdir, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
@@ -24,7 +24,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const clientDir = resolve(root, "dist/client");
 const assetsDir = resolve(clientDir, "assets");
-const outIndex = resolve(clientDir, "index.html");
+const capacitorDir = resolve(root, "www");
+const outIndex = resolve(capacitorDir, "index.html");
 
 if (!existsSync(assetsDir)) {
   console.error(`[build-spa] Missing ${assetsDir}. Run \`bun run build\` first.`);
@@ -57,7 +58,14 @@ ${css ? `    <link rel="stylesheet" href="/assets/${css}" />\n` : ""}    <script
 </html>
 `;
 
+await rm(capacitorDir, { recursive: true, force: true });
+await mkdir(capacitorDir, { recursive: true });
+await cp(clientDir, capacitorDir, {
+  recursive: true,
+  force: true,
+  filter: (source) => source !== resolve(clientDir, "index.html"),
+});
 await writeFile(outIndex, html, "utf8");
 console.log(
-  `[build-spa] Wrote ${outIndex}\n  entry: assets/${entry}${css ? `\n  css:   assets/${css}` : ""}`,
+  `[build-spa] Prepared Capacitor web assets in ${capacitorDir}\n  entry: assets/${entry}${css ? `\n  css:   assets/${css}` : ""}`,
 );
