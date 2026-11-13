@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type FormEvent, type PointerEvent } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { ArrowDownToLine, ArrowUpRight, Eraser, Trash2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -37,10 +37,10 @@ function TacticalPitch({
   players: BoardPlayer[];
   arrows: BoardArrow[];
   tool: Tool;
-  onPointerDown: (event: React.PointerEvent<SVGSVGElement>) => void;
-  onPointerMove: (event: React.PointerEvent<SVGSVGElement>) => void;
+  onPointerDown: (event: PointerEvent<SVGSVGElement>) => void;
+  onPointerMove: (event: PointerEvent<SVGSVGElement>) => void;
   onPointerUp: () => void;
-  onPlayerPointerDown: (event: React.PointerEvent<SVGGElement>, player: BoardPlayer) => void;
+  onPlayerPointerDown: (event: PointerEvent<SVGGElement>, player: BoardPlayer) => void;
 }) {
   const pitchRef = useRef<SVGSVGElement>(null);
 
@@ -159,7 +159,7 @@ export function TacticsBoard() {
 
   const allArrows = draftArrow ? [...arrows, draftArrow] : arrows;
 
-  function toPitch(event: React.PointerEvent<SVGSVGElement>) {
+  function toPitch(event: PointerEvent<SVGSVGElement>) {
     const bounds = event.currentTarget.getBoundingClientRect();
     const px = ((event.clientX - bounds.left) / bounds.width) * 100;
     const py = ((event.clientY - bounds.top) / bounds.height) * 150;
@@ -177,18 +177,18 @@ export function TacticsBoard() {
     setDraftArrow(null);
   }
 
-  function startDrawing(event: React.PointerEvent<SVGSVGElement>, point?: { x: number; y: number }) {
+  function startDrawing(event: PointerEvent<SVGSVGElement>, point?: { x: number; y: number }) {
     if (tool === "select") return;
     event.currentTarget.setPointerCapture(event.pointerId);
     const start = point ?? toPitch(event);
     setDraftArrow({ id: `arrow-${Date.now()}`, kind: tool, x1: start.x, y1: start.y, x2: start.x, y2: start.y });
   }
 
-  function handlePitchDown(event: React.PointerEvent<SVGSVGElement>) {
+  function handlePitchDown(event: PointerEvent<SVGSVGElement>) {
     if (tool !== "select") startDrawing(event);
   }
 
-  function handlePitchMove(event: React.PointerEvent<SVGSVGElement>) {
+  function handlePitchMove(event: PointerEvent<SVGSVGElement>) {
     if (draggingId) {
       const point = toPitch(event);
       setPlayers((current) => current.map((player) => player.id === draggingId ? { ...player, ...point } : player));
@@ -201,15 +201,13 @@ export function TacticsBoard() {
 
   function finishGesture() {
     setDraggingId(null);
-    setDraftArrow((current) => {
-      if (current && Math.hypot(current.x2 - current.x1, current.y2 - current.y1) > 3) {
-        setArrows((previous) => [...previous, current]);
-      }
-      return null;
-    });
+    if (draftArrow && Math.hypot(draftArrow.x2 - draftArrow.x1, draftArrow.y2 - draftArrow.y1) > 3) {
+      setArrows((previous) => [...previous, draftArrow]);
+    }
+    setDraftArrow(null);
   }
 
-  async function saveBoard(event: React.FormEvent<HTMLFormElement>) {
+  async function saveBoard(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!db) {
       setNotice("Local storage is unavailable on this device.");
@@ -271,9 +269,13 @@ export function TacticsBoard() {
           onPointerUp={finishGesture}
           onPlayerPointerDown={(event, player) => {
             event.stopPropagation();
-            event.currentTarget.ownerSVGElement?.setPointerCapture(event.pointerId);
+            const svg = event.currentTarget.ownerSVGElement;
+            if (svg) svg.setPointerCapture(event.pointerId);
             if (tool === "select") setDraggingId(player.id);
-            else startDrawing(event as unknown as React.PointerEvent<SVGSVGElement>, { x: player.x, y: player.y });
+            else {
+              const svg = event.currentTarget.ownerSVGElement;
+              if (svg) startDrawing({ ...event, currentTarget: svg } as PointerEvent<SVGSVGElement>, { x: player.x, y: player.y });
+            }
           }}
         />
       </div>
