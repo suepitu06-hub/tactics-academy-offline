@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TacticsBoardRouteImport } from './routes/tactics-board'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as QuizRouteImport } from './routes/quiz'
@@ -22,6 +23,11 @@ import { Route as LessonIdRouteImport } from './routes/lesson.$id'
 import { Route as FormationsIdRouteImport } from './routes/formations.$id'
 import { Route as CategoryIdRouteImport } from './routes/category.$id'
 
+const TacticsBoardRoute = TacticsBoardRouteImport.update({
+  id: '/tactics-board',
+  path: '/tactics-board',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/quiz': typeof QuizRouteWithChildren
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/tactics-board': typeof TacticsBoardRoute
   '/category/$id': typeof CategoryIdRoute
   '/formations/$id': typeof FormationsIdRoute
   '/lesson/$id': typeof LessonIdRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/quiz': typeof QuizRouteWithChildren
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/tactics-board': typeof TacticsBoardRoute
   '/category/$id': typeof CategoryIdRoute
   '/formations/$id': typeof FormationsIdRoute
   '/lesson/$id': typeof LessonIdRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/quiz': typeof QuizRouteWithChildren
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/tactics-board': typeof TacticsBoardRoute
   '/category/$id': typeof CategoryIdRoute
   '/formations/$id': typeof FormationsIdRoute
   '/lesson/$id': typeof LessonIdRoute
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/quiz'
     | '/search'
     | '/settings'
+    | '/tactics-board'
     | '/category/$id'
     | '/formations/$id'
     | '/lesson/$id'
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/quiz'
     | '/search'
     | '/settings'
+    | '/tactics-board'
     | '/category/$id'
     | '/formations/$id'
     | '/lesson/$id'
@@ -165,6 +176,7 @@ export interface FileRouteTypes {
     | '/quiz'
     | '/search'
     | '/settings'
+    | '/tactics-board'
     | '/category/$id'
     | '/formations/$id'
     | '/lesson/$id'
@@ -180,12 +192,20 @@ export interface RootRouteChildren {
   QuizRoute: typeof QuizRouteWithChildren
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
+  TacticsBoardRoute: typeof TacticsBoardRoute
   CategoryIdRoute: typeof CategoryIdRoute
   LessonIdRoute: typeof LessonIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tactics-board': {
+      id: '/tactics-board'
+      path: '/tactics-board'
+      fullPath: '/tactics-board'
+      preLoaderRoute: typeof TacticsBoardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -304,9 +324,20 @@ const rootRouteChildren: RootRouteChildren = {
   QuizRoute: QuizRouteWithChildren,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
+  TacticsBoardRoute: TacticsBoardRoute,
   CategoryIdRoute: CategoryIdRoute,
   LessonIdRoute: LessonIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

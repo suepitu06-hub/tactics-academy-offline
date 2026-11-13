@@ -41,6 +41,16 @@ export interface StreakRecord {
   date: string; // YYYY-MM-DD
 }
 
+export interface TacticalBoardRecord {
+  id?: number;
+  name: string;
+  homeFormation: string;
+  awayFormation: string;
+  players: { id: string; role: string; x: number; y: number; team: "home" | "away" }[];
+  arrows: { id: string; kind: "pass" | "run"; x1: number; y1: number; x2: number; y2: number }[];
+  updatedAt: number;
+}
+
 class FootballTacticsDB extends Dexie {
   lessons_progress!: Table<LessonProgress, number>;
   quiz_results!: Table<QuizResult, number>;
@@ -48,6 +58,7 @@ class FootballTacticsDB extends Dexie {
   dictionary_bookmarks!: Table<DictionaryBookmark, number>;
   settings!: Table<AppSetting, string>;
   streaks!: Table<StreakRecord, number>;
+  tactics!: Table<TacticalBoardRecord, number>;
 
   constructor() {
     super("football_tactics_db");
@@ -58,6 +69,15 @@ class FootballTacticsDB extends Dexie {
       dictionary_bookmarks: "++id, &termId",
       settings: "&key",
       streaks: "++id, &date",
+    });
+    this.version(2).stores({
+      lessons_progress: "++id, &lessonId, completed, bookmarked",
+      quiz_results: "++id, category, date",
+      formation_bookmarks: "++id, &formationId",
+      dictionary_bookmarks: "++id, &termId",
+      settings: "&key",
+      streaks: "++id, &date",
+      tactics: "++id, updatedAt",
     });
   }
 }
