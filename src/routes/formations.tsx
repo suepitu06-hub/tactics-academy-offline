@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { FORMATIONS } from "@/data/formations";
 import { PageHeader } from "@/components/PageHeader";
 import { FootballField } from "@/components/svg/FootballField";
@@ -23,6 +24,13 @@ function FormationsPage() {
   return (
     <>
       <PageHeader title="Formations" subtitle="Understand every shape" showSettings />
+
+      <Button asChild className="mb-4 h-12 w-full justify-between rounded-xl px-4">
+        <Link to="/tactics-board">
+          <span className="flex items-center gap-2">Open tactics board <span aria-hidden>↗</span></span>
+          <span className="text-xs font-normal opacity-80">Build a shape offline</span>
+        </Link>
+      </Button>
 
       <input
         value={q}

@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep the interactive tactics board in a focused route/component and persist user boards in the existing Dexie database so they remain fully offline.

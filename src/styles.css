@@ -35,6 +35,8 @@
   --color-ring: var(--ring);
   --color-pitch: var(--pitch);
   --color-pitch-line: var(--pitch-line);
+  --color-team-away: var(--team-away);
+  --color-team-away-foreground: var(--team-away-foreground);
   --font-size-base: var(--fs-base);
 }
 
@@ -74,6 +76,8 @@
 
   --pitch: oklch(0.62 0.15 145);
   --pitch-line: oklch(0.98 0 0);
+  --team-away: oklch(0.58 0.16 250);
+  --team-away-foreground: oklch(0.99 0 0);
 
   --shadow-soft: 0 4px 20px -6px oklch(0.62 0.17 148 / 0.15);
   --shadow-card: 0 2px 12px -4px oklch(0 0 0 / 0.08);
@@ -114,6 +118,8 @@
 
   --pitch: oklch(0.48 0.13 145);
   --pitch-line: oklch(0.95 0 0);
+  --team-away: oklch(0.72 0.14 250);
+  --team-away-foreground: oklch(0.16 0.02 250);
 
   --shadow-soft: 0 4px 20px -6px oklch(0 0 0 / 0.5);
   --shadow-card: 0 2px 12px -4px oklch(0 0 0 / 0.4);
